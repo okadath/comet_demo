@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat@2.1.7/CometChat.js"></script>
+
+
+	<!-- se inicializa la app -->
+	<script type="text/javascript">
+		
+
+var appID = "2948603c1feda0e";
+var region = "us";
+var appSetting = new CometChat.AppSettingsBuilder()
+	.subscribePresenceForAllUsers().setRegion(region).build();
+CometChat.init(appID, appSetting).then(
+() => {
+console.log("Initialization completed successfully");
+// You can now call login function.
+},
+error => {
+console.log("Initialization failed with error:", error);
+// Check the reason for error and take appropriate action.
+}
+);
+
+	</script>
+<!-- se crea el usuario -->
+
+	<script type="text/javascript">
+		
+let apiKey = "d5d1ca50ac85115cf3b117eea4852a975cadae17";
+var uid = "{{ user.id }}";
+var name = "{{ user.username }}";
+
+var user = new CometChat.User(uid);
+
+user.setName(name);
+
+CometChat.createUser(user, apiKey).then(
+    user => {
+        console.log("user created", user);
+    },error => {
+        console.log("error", error);
+    }
+)
+	</script>
+<!-- se loguea el usuario -->
+
+	<script type="text/javascript">
+
+var UID = "{{ user.id }}";
+var authKey = "d5d1ca50ac85115cf3b117eea4852a975cadae17";
+
+CometChat.login(UID, authKey).then(
+  User => {
+    console.log("Login Successful:", { User });
+    // User loged in successfully.
+  },
+  error => {
+    console.log("Login failed with exception:", { error });
+    // User login failed, check error and take appropriate action.
+  }
+);
+ 
+ 	</script>
+
+<!-- el usuario se une al grupo -->
+	<script type="text/javascript">
+
+var GUID = "test_asd";
+var password = "";
+var groupType = CometChat.GROUP_TYPE.PUBLIC;
+
+CometChat.joinGroup(GUID, groupType, password).then(
+  group => {
+    console.log("Group joined successfully:", group);
+  },
+  error => {
+    console.log("Group joining failed with exception:", error);
+  }
+);
+
+ 	</script>
+
+<!-- envia un mensaje al grupo -->
+	<script type="text/javascript">
+var receiverID = "test_asd";
+var messageText = "Hello world!";
+var receiverType = CometChat.RECEIVER_TYPE.GROUP;
+
+var textMessage = new CometChat.TextMessage(
+receiverID,
+messageText,
+receiverType
+);
+
+CometChat.sendMessage(textMessage).then(
+message => {
+console.log("Message sent successfully:", message);
+},
+error => {
+console.log("Message sending failed with error:", error);
+}
+);
+
+	</script>
+
+<!-- recupera los mensajes -->
+	<script type="text/javascript">
+var GUID = "test_asd";
+var limit = 30;
+
+var messagesRequest = new CometChat.MessagesRequestBuilder()
+.setLimit(limit)
+.setGUID(GUID)
+.build();
+
+messagesRequest.fetchPrevious().then(
+messages => {
+console.log("Message list fetched:", messages);
+// Handle the list of messages
+},
+error => {
+console.log("Message fetching failed with error:", error);
+}
+);
+
+	</script>
+
+	<script type="text/javascript">
+		var listenerID ="{{ user.id }}";
+
+CometChat.addMessageListener(
+  listenerID,
+  new CometChat.MessageListener({
+    onTextMessageReceived: textMessage => {
+      console.log("Text message received successfully", textMessage);
+      // Handle text message
+    },
+    onMediaMessageReceived: mediaMessage => {
+      console.log("Media message received successfully", mediaMessage);
+      // Handle media message
+    },
+    onCustomMessageReceived: customMessage => {
+      console.log("Custom message received successfully", customMessage);
+      // Handle custom message
+    }
+  })
+);
+	</script>
+</head>
+<body>
+asd
+{{ user.id }}
+</body>
+</html>
